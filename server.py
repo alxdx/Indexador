@@ -20,7 +20,6 @@ def autoCompleteSubject():
 
 
 if __name__=='__main__':
-
 	listaMaterias=indexer.initData()
 	noneIterator=[None]*len(listaMaterias)
 	dictMaterias=dict(zip(listaMaterias,noneIterator))

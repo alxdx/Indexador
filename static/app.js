@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 		})
 		.then(dat=>{
 			options.data=dat
-			console.log(options)
+			//console.log(options)
 		    var elems = document.querySelectorAll('.autocomplete');
 		    var instances = M.Autocomplete.init(elems, options);
 		})
