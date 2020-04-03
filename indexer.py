@@ -97,7 +97,7 @@ class Indexer:
 		##Recupera todas las materias con sus respectivos nrc
 		self.Materias=self.getCleanMaterias(self.data)
 		self.nombresMaterias=self.Materias.Materia.unique().tolist()
-		
+		return self.nombresMaterias
 	
 if __name__ == '__main__':
 	p=Indexer()

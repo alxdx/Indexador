@@ -1,5 +1,5 @@
 from flask import Flask, request, render_template, jsonify, make_response
-import indexer
+from indexer import Indexer
 
 app=Flask(__name__)
 dictMaterias={}
@@ -20,7 +20,8 @@ def autoCompleteSubject():
 
 
 if __name__=='__main__':
-	listaMaterias=indexer.initData()
+	p=Indexer()
+	listaMaterias=p.initData()
 	noneIterator=[None]*len(listaMaterias)
 	dictMaterias=dict(zip(listaMaterias,noneIterator))
 	app.run(debug=True)
