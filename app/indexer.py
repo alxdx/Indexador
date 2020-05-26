@@ -19,11 +19,7 @@ class Indexer:
 	#recibe un directorio
 	#retorna todos los documentos de ese directorio
 	def getDocsinDir(self,directory):
-	    docs=[]
-	    for root,directories,files in os.walk(directory+'/'):
-	        for f in files:
-	            docs.append(directory+'/'+f)
-	    return docs
+	    return list(map(lambda x: directory+x,os.listdir(directory)))
 
 	#recibe una lista de nombres de documentos
 	#retorna un lista de 
@@ -85,9 +81,34 @@ class Indexer:
 	    p=p.drop_duplicates()
 	    return p
 
+	def get_materias(self,data):
+	    materias=data.Materia.tolist()
+	    nrcs=data.NRC.tolist()
+	    
+	    antesMat=""
+	    antesNrc=0
+	    realMaterias=[]
+	    for m,n in zip(materias,nrcs):
+	        ahoraMat=m
+	        ahoraNrc=n
+	        if(antesNrc==-1):
+	            #print('aqui----'+antesMat+' '+m,n,type(n))
+	            helpDic={0:antesMat+' '+m,1:n}
+	            realMaterias.append(helpDic)
+	        elif(ahoraNrc!=-1):
+	            helpDic={0:m,1:n}
+	            #print(m,n,type(n))
+	            realMaterias.append(helpDic)
+	        antesNrc=n
+	        antesMat=m
+	    p=pd.DataFrame(realMaterias)
+	    p=p.rename(columns={0:'Materia',1:'NRC'})
+	    p=p.drop_duplicates()
+		return p
+
 	def initData(self):
 		pd.options.mode.chained_assignment = None  # default='warn'
-		docs=self.getDocsinDir("filesCSV")
+		docs=self.getDocsinDir("filesCSV/")
 		self.data=self.getCSVs(docs)
 		for x in range(len(self.data)):
 			self.data[x]=self.cleanData(self.data[x])
@@ -98,7 +119,7 @@ class Indexer:
 		self.Materias=self.getCleanMaterias(self.data)
 		self.nombresMaterias=self.Materias.Materia.unique().tolist()
 		return self.nombresMaterias
-	
+
 if __name__ == '__main__':
 	p=Indexer()
 	p.initData()

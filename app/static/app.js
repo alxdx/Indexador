@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
 		data:null
 	}
     options['limit']=8
-	fetch(`${window.origin}/subject`)
+	fetch(`${window.origin}/subject/?carrera=iti&plan=6`)
 		.then(res=>{
 			if (res.status !== 200) {
           		console.log(`Error. Status code: ${res.status}`);
